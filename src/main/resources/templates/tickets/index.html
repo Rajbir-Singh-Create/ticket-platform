@@ -14,7 +14,7 @@
     <main>
         <div class="container">
             
-            <!-- Messaggio di creazione ticket -->
+            <!-- Messaggio di creazione o modifica ticket -->
             <th:block th:if="${successMessage != null}">
                 <div class="alert alert-success alert-dismissible fade show my-2" role="alert">
                     <span th:text="${successMessage}"></span>
@@ -58,7 +58,9 @@
                             <th>ID</th>
                             <th>Titolo</th>
                             <th>Data apertura</th>
+                            <th>Ultima modifica</th>
                             <th>Stato</th>
+                            <th>Priorità</th>
                             <th>
                                 <!-- Dettagli -->
                             </th>
@@ -74,19 +76,21 @@
                                 <td th:text="${ticket.id}"></td>
                                 <td th:text="${ticket.title}"></td>
                                 <td th:text="${ticket.startDate}"></td>
+                                <td th:text="${ticket.lastUpdate}"></td>
                                 <td th:text="${ticket.ticketStatus}"></td>
+                                <td th:text="${ticket.priority}"></td>
                                 <!-- Dettagli ticket -->
                                 <td>
-
+                                    <a class="btn btn-primary mx-1" th:href="@{|/ticket/show/${ticket.id}|}">Dettagli</a>
                                 </td>
                                 <!-- Modifica ticket -->
-                                 <td>
-
-                                 </td>
+                                <td>
+                                    <a class="btn btn-primary mx-1" th:href="@{|/ticket/edit/${ticket.id}|}"> Modifica </a>
+                                </td>
                                  <!-- Elimina ticket -->
                                   <td>
                                     <form action="#" th:action="@{'/ticket/delete/{id}'(id=${ticket.id})}" method="post" onclick="return confirm('Vuoi eliminare il ticket?')">
-                                        <button class="btn btn-outline-danger mx-1" type="submit" id="submitButton"> Elimina </button>
+                                        <button class="btn btn-danger mx-1" type="submit" id="submitButton"> Elimina </button>
                                     </form>
                                   </td>
                             </tr>

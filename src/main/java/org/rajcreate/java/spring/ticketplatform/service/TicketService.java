@@ -1,6 +1,8 @@
 package org.rajcreate.java.spring.ticketplatform.service;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.rajcreate.java.spring.ticketplatform.model.Ticket;
 import org.rajcreate.java.spring.ticketplatform.repository.TicketRepository;
@@ -27,14 +29,34 @@ public class TicketService {
         return result;
     }
 
+    // Metodo ricerca per ID
+    public Optional<Ticket> findTicketById(Integer id){
+        return ticketRepository.findById(id);
+    }
+
     // Salvataggio
     public Ticket create(Ticket ticket){
         return ticketRepository.save(ticket);
     }
     
+    // Modifica
+    public Ticket update(Ticket ticket){
+        Optional<Ticket> optTicket = ticketRepository.findById(ticket.getId());
+        
+        // Cerchiamo se esiste il ticket
+        if(optTicket.isEmpty()){
+            throw new IllegalArgumentException("impossibile aggiornare il ticket senza l'ID");
+        }
+
+        // Aggiorniamo la data di modifica
+        ticket.setLastUpdate(LocalDate.now());
+
+        return ticketRepository.save(ticket);
+    }
+
     // Cancellazione
     public void deletebyId(Integer id){
-        Ticket ticket = ticketRepository.findById(id).get();
+        // Ticket ticket = ticketRepository.findById(id).get();
 
         // TODO cancellare le note associate al ticket
 

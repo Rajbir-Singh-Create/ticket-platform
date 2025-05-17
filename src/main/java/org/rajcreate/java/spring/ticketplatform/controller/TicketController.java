@@ -1,6 +1,6 @@
 package org.rajcreate.java.spring.ticketplatform.controller;
 
-import java.time.LocalDate;
+import java.util.Optional;
 
 import org.rajcreate.java.spring.ticketplatform.model.Ticket;
 import org.rajcreate.java.spring.ticketplatform.service.TicketService;
@@ -21,6 +21,7 @@ import jakarta.validation.Valid;
 
 
 
+
 @Controller
 @RequestMapping("/ticket")
 public class TicketController {
@@ -28,6 +29,7 @@ public class TicketController {
     @Autowired
     private TicketService ticketService;
 
+    // READ
     // Dashboard
     @GetMapping
     public String index(@RequestParam(name="keyword", required=false) String title, Model model){
@@ -37,6 +39,22 @@ public class TicketController {
     }
 
     // Detail page
+    @GetMapping("/show/{id}")
+    public String show(@PathVariable("id") Integer id, Model model) {
+        
+        Optional<Ticket> optTicket = ticketService.findTicketById(id);
+        
+        if(optTicket.isPresent()){
+            model.addAttribute("ticket", optTicket.get());
+            return "/tickets/show";
+        }
+        
+        model.addAttribute("errorCause", "Non esiste ticket con id " + id);
+        model.addAttribute("errorMessage", "Errore di ricerca ticket");
+
+        return "/error_pages/genericError";
+    }
+    
 
     // CREAZIONE
     // GET per la form di creazione ticket
@@ -58,15 +76,38 @@ public class TicketController {
             return "/tickets/create";
         }
 
-        // Aggiunta automatica della data di creazione
-        formTicket.setStartDate(LocalDate.now());
-
         // Logica di salvataggio
         ticketService.create(formTicket);
         
         redirectAttributes.addFlashAttribute("successMessage", "Ticket aperto con successo");
         return "redirect:/ticket";
     }
+
+    // UPDATE
+    // GET per la form di modifica ticket
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable("id") Integer id, Model model) {
+        
+        model.addAttribute("ticket", ticketService.findTicketById(id).get());
+        
+        return "/tickets/edit";
+    }
+    
+    // POST per la form di modifica ticket
+    @PostMapping("/edit/{id}")
+    public String update(@Valid @ModelAttribute("ticket") Ticket formTicket, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+        
+        if(bindingResult.hasErrors()){
+            return "/tickets/edit";
+        }
+
+        ticketService.update(formTicket);
+
+        redirectAttributes.addFlashAttribute("successMessage", "Ticket aggiornato con successo");
+        
+        return "redirect:/ticket";
+    }
+    
     
     // DELETE
     @PostMapping("/delete/{id}")

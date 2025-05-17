@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="~{fragments/header :: head}"></div>
+    <title th:text="${errorMessage}"></title>
+</head>
+<body>
+    <p th:text="|Errore durante la richiesta per il seguente motivo: ${errorCause}|"></p>
+    <div th:replace="~{fragments/header :: bootstrapScript}"></div>
+</body>
+</html>

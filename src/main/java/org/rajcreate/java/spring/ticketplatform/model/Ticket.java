@@ -22,6 +22,7 @@ public class Ticket {
     private Integer id;
 
     @NotBlank(message="Il titolo è obbligatorio")
+    @Size(max=50, message="hai superato il numero di caratteri possibili")
     private String title;
 
     @NotBlank(message="La descrizione è obbligatoria")
@@ -33,12 +34,20 @@ public class Ticket {
     private LocalDate startDate;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "end_date")
-    private LocalDate endDate;
+    @Column(name = "last_update")
+    private LocalDate lastUpdate;
 
     @NotBlank(message="Lo stato è obbligatorio")
     @Column(name = "ticket_status")
     private String ticketStatus;
+
+    @NotBlank(message="La priorità è obbligatoria")
+    private String priority;
+
+    // Aggiunta automatica della data di creazione tramite costruttore
+    public Ticket(){
+        this.startDate = LocalDate.now();
+    }
 
     public Integer getId() {
         return id;
@@ -72,12 +81,12 @@ public class Ticket {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate() {
-        return endDate;
+    public LocalDate getLastUpdate() {
+        return lastUpdate;
     }
 
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
+    public void setLastUpdate(LocalDate lastUpdate) {
+        this.lastUpdate = lastUpdate;
     }
 
     public String getTicketStatus() {
@@ -86,6 +95,14 @@ public class Ticket {
 
     public void setTicketStatus(String ticketStatus) {
         this.ticketStatus = ticketStatus;
+    }
+
+    public String getPriority() {
+        return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
     }
 
 }

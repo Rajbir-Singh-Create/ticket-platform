@@ -111,9 +111,11 @@ public class TicketController {
     
     // DELETE
     @PostMapping("/delete/{id}")
-    public String delete(@PathVariable Integer id) {
+    public String delete(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
         ticketService.deletebyId(id);
         
+        redirectAttributes.addFlashAttribute("successMessage", "Ticket eliminato con successo");
+
         return "redirect:/ticket";
     }
 

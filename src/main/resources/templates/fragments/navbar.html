@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="~{/fragments/header :: head}"></div>
+</head>
+
+<body>
+    <main>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="navbar(current)">
+            <div class="container-fluid">
+                <a class="navbar-brand" th:href="@{/}">
+                    <img src="/img/icons8-tech-support-100.png" alt="tech support logo" width="40" height="40">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" th:classAppend="${current == 'ticket'} ? active : not-active" aria-current="page" th:href="@{/ticket}">Dashboard</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </main>
+    <div th:replace="~{fragments/header :: bootstrapScript}"></div>
+</body>
+
+</html>

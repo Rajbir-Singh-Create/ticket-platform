@@ -26,5 +26,18 @@ public class TicketService {
 
         return result;
     }
+
+    // Salvataggio
+    public Ticket create(Ticket ticket){
+        return ticketRepository.save(ticket);
+    }
     
+    // Cancellazione
+    public void deletebyId(Integer id){
+        Ticket ticket = ticketRepository.findById(id).get();
+
+        // TODO cancellare le note associate al ticket
+
+        ticketRepository.deleteById(id);
+    }
 }

@@ -29,9 +29,29 @@
                         <div class="card-body">
                         <p><strong>ID:</strong> <span th:text="*{id}"></span></p>
                         <p><strong>Titolo:</strong> <span th:text="*{title}"></span></p>
-                        <!-- TODO gestire dinamicamente lo stile in base alla priorità e status -->
-                        <p><strong>Stato:</strong> <span class="badge bg-warning text-dark" th:text="*{ticketStatus}"></span></p>
-                        <p><strong>Priorità:</strong> <span class="badge bg-danger" th:text="*{priority}"></span></p>
+
+                        <!-- Gestione dinamica dello stile in base alla priorità -->
+                        <p th:if="${ticket.ticketStatus == 'Da fare'}">
+                            <strong>Stato:</strong> <span class="badge bg-secondary" th:text="*{ticketStatus}"></span>
+                        </p>
+                        <p th:if="${ticket.ticketStatus == 'In corso'}">
+                            <strong>Stato:</strong> <span class="badge bg-info" th:text="*{ticketStatus}"></span>
+                        </p>
+                        <p th:if="${ticket.ticketStatus == 'Completato'}">
+                            <strong>Stato:</strong> <span class="badge bg-success" th:text="*{ticketStatus}"></span>
+                        </p>
+                        
+                        <!-- Gestione dinamica dello stile in base alla priorità -->
+                        <p th:if="${ticket.priority == 'Alta'}">
+                            <strong>Priorità:</strong> <span class="badge bg-danger" th:text="*{priority}"></span>
+                        </p>
+                        <p th:if="${ticket.priority == 'Media'}">
+                            <strong>Priorità:</strong> <span class="badge bg-warning" th:text="*{priority}"></span>
+                        </p>
+                        <p th:if="${ticket.priority == 'Bassa'}">
+                            <strong>Priorità:</strong> <span class="badge bg-info" th:text="*{priority}"></span>
+                        </p>
+
                         <!-- TODO implementare con Spring Security -->
                         <p><strong>Operatore:</strong> Mario Rossi</p>
                         <p><strong>Data creazione:</strong> <span th:text="*{startDate}"></span></p>

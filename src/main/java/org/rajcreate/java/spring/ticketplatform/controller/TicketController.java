@@ -56,7 +56,7 @@ public class TicketController {
     }
     
 
-    // CREAZIONE
+    // CREATE
     // GET per la form di creazione ticket
     @GetMapping("/create")
     public String create(Model model){

@@ -3,6 +3,7 @@ package org.rajcreate.java.spring.ticketplatform.controller;
 import java.util.Optional;
 
 import org.rajcreate.java.spring.ticketplatform.model.Ticket;
+import org.rajcreate.java.spring.ticketplatform.service.CategoryService;
 import org.rajcreate.java.spring.ticketplatform.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,6 +30,9 @@ public class TicketController {
     @Autowired
     private TicketService ticketService;
 
+    @Autowired
+    private CategoryService categoryService;
+
     // READ
     // Dashboard
     @GetMapping
@@ -40,7 +44,7 @@ public class TicketController {
 
     // Detail page
     @GetMapping("/show/{id}")
-    public String show(@PathVariable("id") Integer id, Model model) {
+    public String show(@PathVariable Integer id, Model model) {
         
         Optional<Ticket> optTicket = ticketService.findTicketById(id);
         
@@ -63,6 +67,9 @@ public class TicketController {
 
         model.addAttribute("ticket", new Ticket());
 
+        // Carico le categorie
+        model.addAttribute("categoryList", categoryService.findAllCategories());
+
         return "/tickets/create";
     }
 
@@ -72,6 +79,9 @@ public class TicketController {
         
         // Logica validazione
         if(bindingResult.hasErrors()){
+            // Ricarico le categorie
+            model.addAttribute("categoryList", categoryService.findAllCategories());
+            
             // Se il bindingResult ha dato errori, resto nella pagina
             return "/tickets/create";
         }
@@ -86,9 +96,12 @@ public class TicketController {
     // UPDATE
     // GET per la form di modifica ticket
     @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Integer id, Model model) {
+    public String edit(@PathVariable Integer id, Model model) {
         
         model.addAttribute("ticket", ticketService.findTicketById(id).get());
+
+        // Carico le categorie
+        model.addAttribute("categoryList", categoryService.findAllCategories());
         
         return "/tickets/edit";
     }
@@ -98,6 +111,9 @@ public class TicketController {
     public String update(@Valid @ModelAttribute("ticket") Ticket formTicket, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         
         if(bindingResult.hasErrors()){
+            // Ricarico le categorie
+            model.addAttribute("categoryList", categoryService.findAllCategories());
+
             return "/tickets/edit";
         }
 

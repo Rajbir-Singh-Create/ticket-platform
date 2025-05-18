@@ -52,6 +52,12 @@
                             <strong>Priorità:</strong> <span class="badge bg-info" th:text="*{priority}"></span>
                         </p>
 
+                        <!-- Categoria -->
+                        <p><Strong>Categoria: </Strong>
+                            <span th:if="${ticket.category != null}" th:text="*{category.categoryName}"></span>
+                            <span th:if="${ticket.category == null}">Nessuna</span>
+                        </p>
+
                         <!-- TODO implementare con Spring Security -->
                         <p><strong>Operatore:</strong> Mario Rossi</p>
                         <p><strong>Data creazione:</strong> <span th:text="*{startDate}"></span></p>

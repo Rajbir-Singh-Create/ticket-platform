@@ -21,6 +21,9 @@
                         <li class="nav-item">
                             <a class="nav-link" th:classAppend="${current == 'ticket'} ? active : not-active" aria-current="page" th:href="@{/ticket}">Dashboard</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:classAppend="${current == 'categories'} ? active : not-active" aria-current="page" th:href="@{/categories}">Categorie</a>
+                        </li>
                     </ul>
                 </div>
             </div>

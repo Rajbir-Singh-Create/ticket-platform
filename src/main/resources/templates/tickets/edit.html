@@ -75,7 +75,14 @@
                                 </ul>
                             </div>
 
-                            <!-- TODO Categoria -->
+                            <!-- Categoria -->
+                            <div class="col-12 my-2">
+                                <label class="form-label">Categoria</label>
+                                <select class="form-select" id="category" th:field="*{category.id}">
+                                    <option value="" selected>Seleziona la categoria</option>
+                                    <option th:each="cat : ${categoryList}" th:value="${cat.id}" th:text="${cat.categoryName}" th:selected="${ticket.category}"></option>
+                                </select>
+                            </div>
 
                             <!-- Buttons -->
                             <div class="col-12 my-3">

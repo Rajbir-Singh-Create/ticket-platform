@@ -31,7 +31,7 @@ public class CategoryService {
     }
 
     // Metodo per eliminare una categoria in base all'ID
-    public void deleteById(Integer id){
+    public void deleteCategoryById(Integer id){
 
         // Rimuoviamo eventuali ticket associati
         Category cat = categoryRepository.findById(id).get();

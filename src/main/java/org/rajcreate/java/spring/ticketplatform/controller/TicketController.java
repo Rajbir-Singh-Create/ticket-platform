@@ -98,12 +98,20 @@ public class TicketController {
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Integer id, Model model) {
         
-        model.addAttribute("ticket", ticketService.findTicketById(id).get());
-
-        // Carico le categorie
-        model.addAttribute("categoryList", categoryService.findAllCategories());
+        Optional<Ticket> optTicket = ticketService.findTicketById(id);
         
-        return "/tickets/edit";
+        if(optTicket.isPresent()){
+            model.addAttribute("ticket", optTicket.get());
+            // Carico le categorie
+            model.addAttribute("categoryList", categoryService.findAllCategories());
+        
+            return "/tickets/edit";
+        }
+
+        model.addAttribute("errorCause", "Non esiste ticket con id " + id);
+        model.addAttribute("errorMessage", "Errore di ricerca ticket");
+
+        return "/error_pages/genericError";
     }
     
     // POST per la form di modifica ticket

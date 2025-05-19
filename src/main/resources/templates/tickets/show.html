@@ -11,7 +11,7 @@
         <nav th:replace="~{fragments/navbar :: navbar('ticket')}"></nav>
     </header>
     <main>
-        <div class="container my-3" th:object="${ticket}">
+        <div class="container my-5" th:object="${ticket}">
 
             <!-- Messaggio di creazione o modifica ticket -->
             <th:block th:if="${successMessage != null}">

@@ -1,6 +1,7 @@
 package org.rajcreate.java.spring.ticketplatform.model;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -13,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -52,6 +54,9 @@ public class Ticket {
     @JoinColumn(name = "category_id")
     @JsonBackReference
     private Category category;
+
+    @OneToMany(mappedBy="ticket")
+    private List <Note> note;
 
     // Aggiunta automatica della data di creazione tramite costruttore
     public Ticket(){
@@ -122,4 +127,13 @@ public class Ticket {
         this.category = category;
     }
 
+    public List<Note> getNote() {
+        return note;
+    }
+
+    public void setNote(List<Note> note) {
+        this.note = note;
+    }
+
+    
 }

@@ -33,7 +33,7 @@
 
                     <!-- Lista categorie -->
                     <ul class="list-group" th:if="${list.size() > 0}">
-                        <li class="list-group-item d-flex justify-content-between" th:each="item : ${list}">
+                        <li class="list-group-item d-flex justify-content-between row-hover" th:each="item : ${list}">
                             <span th:text="${item.categoryName}"></span>
                             <form th:action="@{|/categories/delete/${item.id}|}" method="post">
                                 <button class="btn btn-danger" type="submit" id="submitButton" onclick="return confirm('Sei sicuro?')">

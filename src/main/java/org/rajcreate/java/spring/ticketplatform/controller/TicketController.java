@@ -2,6 +2,7 @@ package org.rajcreate.java.spring.ticketplatform.controller;
 
 import java.util.Optional;
 
+import org.rajcreate.java.spring.ticketplatform.model.Note;
 import org.rajcreate.java.spring.ticketplatform.model.Ticket;
 import org.rajcreate.java.spring.ticketplatform.service.CategoryService;
 import org.rajcreate.java.spring.ticketplatform.service.TicketService;
@@ -131,8 +132,7 @@ public class TicketController {
         
         return "redirect:/ticket";
     }
-    
-    
+        
     // DELETE
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
@@ -142,5 +142,22 @@ public class TicketController {
 
         return "redirect:/ticket";
     }
+
+    // GET per aggiunta di note
+    @GetMapping("/{id}/note")
+    public String note(@PathVariable Integer id, Model model) {
+        
+        // Creazione nuovo oggetto nota
+        Note note = new Note();
+
+        // Passiamo il ticket di riferimento
+        note.setTicket(ticketService.findTicketById(id).get());
+
+        model.addAttribute("note", note);
+        model.addAttribute("editMode", false);
+
+        return "/notes/edit";
+    }
+    
 
 }

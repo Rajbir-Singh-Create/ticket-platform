@@ -109,7 +109,7 @@ public class TicketController {
     // POST per la form di modifica ticket
     @PostMapping("/edit/{id}")
     public String update(@Valid @ModelAttribute("ticket") Ticket formTicket, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
-        
+
         if(bindingResult.hasErrors()){
             // Ricarico le categorie
             model.addAttribute("categoryList", categoryService.findAllCategories());

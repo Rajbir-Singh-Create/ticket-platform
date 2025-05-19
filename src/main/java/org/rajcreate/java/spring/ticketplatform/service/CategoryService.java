@@ -1,6 +1,7 @@
 package org.rajcreate.java.spring.ticketplatform.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.rajcreate.java.spring.ticketplatform.model.Category;
 import org.rajcreate.java.spring.ticketplatform.model.Ticket;
@@ -17,6 +18,11 @@ public class CategoryService {
     // Metodo per raccogliere tutte le categorie
     public List<Category> findAllCategories(){
         return categoryRepository.findAll();        
+    }
+
+    // Ricerca categoria per ID
+    public Optional<Category> findCategoryById(Integer id){
+        return categoryRepository.findById(id);
     }
 
     // Metodo per creare una categoria

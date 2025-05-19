@@ -41,13 +41,6 @@ public class TicketService {
     
     // Modifica
     public Ticket update(Ticket ticket){
-        Optional<Ticket> optTicket = ticketRepository.findById(ticket.getId());
-        
-        // Cerchiamo se esiste il ticket
-        if(optTicket.isEmpty()){
-            throw new IllegalArgumentException("impossibile aggiornare il ticket senza l'ID");
-        }
-
         // Aggiorniamo la data di modifica
         ticket.setLastUpdate(LocalDate.now());
 

@@ -42,4 +42,5 @@ public class CategoryService {
         // Eliminiamo la categoria
         categoryRepository.deleteById(id);
     }
+
 }

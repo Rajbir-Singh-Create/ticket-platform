@@ -63,4 +63,31 @@ public class TicketService {
 
         ticketRepository.deleteById(id);
     }
+
+    // Metodo per filtrare i ticket per status
+    // TODO forse posso fare in un metodo unico
+    public List<Ticket> findTicketByStatus(String ticketStatus){
+        List <Ticket> result;
+
+        if(ticketStatus != null && !ticketStatus.isBlank()){
+            result = ticketRepository.findByTicketStatus(ticketStatus);
+        } else {
+            result = ticketRepository.findAll();
+        }
+
+        return result;
+    }
+
+    // Metodo per filtrare i ticket per categoria
+    public List<Ticket> findTicketByCategory(String categoryName){
+        List <Ticket> result;
+
+        if(categoryName != null && !categoryName.isBlank()){
+            result = ticketRepository.findTicketByCategoryName(categoryName);
+        } else {
+            result = ticketRepository.findAll();
+        }
+
+        return result;
+    }
 }

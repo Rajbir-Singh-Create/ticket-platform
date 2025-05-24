@@ -24,7 +24,14 @@
                             <!-- Title -->
                             <div class="col-12 my-2">
                                 <label class="form-label">Titolo</label>
-                                <input type="text" class="form-control" id="title" th:field="*{title}" th:errorClass="is-Invalid">
+
+                                <th:block th:if="${adminRole}">
+                                    <input type="text" class="form-control" id="title" th:field="*{title}" th:errorClass="is-Invalid">
+                                </th:block>
+                                <th:block th:unless="${adminRole}">
+                                    <input type="hidden" th:field="*{title}" />
+                                    <input type="text" class="form-control" th:value="*{title}" readonly />
+                                </th:block>
 
                                 <!-- errori validation -->
                                 <ul th:if="${#fields.hasErrors('title')}">
@@ -35,7 +42,14 @@
                             <!-- Description -->
                             <div class="col-12 my-2">
                                 <label class="form-label">Descrizione</label>
-                                <input type="text" class="form-control" id="description" th:field="*{description}" th:errorClass="is-Invalid">
+
+                                <th:block th:if="${adminRole}">
+                                    <input type="text" class="form-control" id="description" th:field="*{description}" th:errorClass="is-Invalid">
+                                </th:block>
+                                <th:block th:unless="${adminRole}">
+                                    <input type="hidden" th:field="*{description}" />
+                                    <input type="text" class="form-control" th:value="*{description}" readonly />
+                                </th:block>
 
                                 <!-- errori validation -->
                                 <ul th:if="${#fields.hasErrors('description')}">
@@ -60,14 +74,20 @@
                             </div>
 
                             <!-- Priority -->
-                            <div class="col-12 my-2">
+                            <div class="col-12 my-2" >
                                 <label class="form-label">Priorià</label>
-                                <select class="form-select" id="status" th:field="*{priority}" th:errorClass="is-Invalid">
-                                    <option value="" selected>Seleziona la priorità</option>
-                                    <option value="Alta">Alta</option>
-                                    <option value="Media">Media</option>
-                                    <option value="Bassa">Bassa</option>
-                                </select>
+                                <th:block th:if="${adminRole}">
+                                    <select class="form-select" id="priority" th:field="*{priority}" th:errorClass="is-Invalid">
+                                        <option value="" selected>Seleziona la priorità</option>
+                                        <option value="Alta">Alta</option>
+                                        <option value="Media">Media</option>
+                                        <option value="Bassa">Bassa</option>
+                                    </select>
+                                </th:block>
+                                <th:block th:unless="${adminRole}">
+                                    <input type="hidden" th:field="*{priority}" />
+                                    <input type="text" class="form-control" th:value="*{priority}" readonly />
+                                </th:block>
 
                                 <!-- errori validation -->
                                 <ul th:if="${#fields.hasErrors('priority')}">
@@ -78,9 +98,15 @@
                             <!-- Categoria -->
                             <div class="col-12 my-2">
                                 <label class="form-label">Categoria</label>
-                                <select class="form-select" id="category" th:field="*{category.id}">
-                                    <option th:each="cat : ${categoryList}" th:value="${cat.id}" th:text="${cat.categoryName}" th:selected="${ticket.category}"></option>
-                                </select>
+                                <th:block th:if="${adminRole}">
+                                    <select class="form-select" id="category" th:field="*{category.id}">
+                                        <option th:each="cat : ${categoryList}" th:value="${cat.id}" th:text="${cat.categoryName}" th:selected="${ticket.category}"></option>
+                                    </select>
+                                </th:block>
+                                <th:block th:unless="${adminRole}">
+                                    <input type="hidden" th:field="*{category.id}" />
+                                    <input type="text" class="form-control" th:value="${ticket.category.categoryName}" readonly />
+                                </th:block>
                             </div>
 
                             <!-- Buttons -->

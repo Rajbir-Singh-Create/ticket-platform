@@ -20,6 +20,7 @@ public class SecurityConfiguration {
                 .requestMatchers("/ticket/create").hasAuthority("ADMIN")
                 .requestMatchers("/ticket/edit/status/**").hasAnyAuthority("OPERATOR", "ADMIN")
                 .requestMatchers("/ticket/edit/**").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/ticket/edit/status/**").hasAnyAuthority("OPERATOR", "ADMIN")
                 .requestMatchers(HttpMethod.POST, "/ticket/**").hasAuthority("ADMIN")
                 .requestMatchers("/categories", "/categories/**").hasAuthority("ADMIN")
                 .requestMatchers("/ticket", "/ticket/**").hasAnyAuthority("OPERATOR", "ADMIN")

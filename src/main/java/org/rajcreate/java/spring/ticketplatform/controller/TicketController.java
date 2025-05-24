@@ -2,6 +2,7 @@ package org.rajcreate.java.spring.ticketplatform.controller;
 
 import java.util.Optional;
 
+import org.rajcreate.java.spring.ticketplatform.model.Category;
 import org.rajcreate.java.spring.ticketplatform.model.Note;
 import org.rajcreate.java.spring.ticketplatform.model.Ticket;
 import org.rajcreate.java.spring.ticketplatform.service.CategoryService;
@@ -201,7 +202,22 @@ public class TicketController {
     public String statusUpdate(@Valid @ModelAttribute("ticket") Ticket formTicket, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 
         if(bindingResult.hasErrors()){
+            // Ricarico le categorie
+            model.addAttribute("categoryList", categoryService.findAllCategories());
+
             return "/tickets/edit";
+        }
+
+        // Gestisco l'associazione della categoria se non presente a DB
+        if (formTicket.getCategory() != null && formTicket.getCategory().getId() != null) {
+            Optional<Category> optCategory = categoryService.findCategoryById(formTicket.getCategory().getId());
+            if(optCategory.isPresent()){
+                formTicket.setCategory(optCategory.get());
+            } else {
+                formTicket.setCategory(null);
+            }            
+        } else {
+            formTicket.setCategory(null);
         }
 
         ticketService.update(formTicket);

@@ -82,7 +82,7 @@
                         </form>
                         <a class="btn btn-outline-secondary mx-1" th:href="@{/ticket}">Indietro</a>
 
-                        <!-- Bottone modifica status per OPERATOR -->
+                        <!-- ! Bottone modifica status per OPERATOR -->
                         <a class="btn btn-outline-primary mx-1" th:href="@{|/ticket/edit/status/${ticket.id}|}" sec:authorize="hasAuthority('OPERATOR')"> Aggiorna stato </a>
                     </div>
                 </div>

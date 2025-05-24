@@ -6,6 +6,7 @@ import org.rajcreate.java.spring.ticketplatform.model.Note;
 import org.rajcreate.java.spring.ticketplatform.repository.NoteRepository;
 import org.rajcreate.java.spring.ticketplatform.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -52,7 +53,9 @@ public class NoteController {
     
     // UPDATE Nota
     @GetMapping("/edit/{id}")
-    public String edit(@PathVariable Integer id, Model model) {
+    public String edit(Authentication authentication, @PathVariable Integer id, Model model) {
+        // diamo la possibilità di vedere il nome nella pagina
+        model.addAttribute("email", authentication.getName());
 
         // Recupero la nota
         Note note = noteRepository.findById(id).get();

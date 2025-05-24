@@ -3,6 +3,7 @@ package org.rajcreate.java.spring.ticketplatform.controller;
 import org.rajcreate.java.spring.ticketplatform.model.Category;
 import org.rajcreate.java.spring.ticketplatform.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,7 +25,9 @@ public class CategoryController {
 
     // index gestione categorie
     @GetMapping
-    public String index(Model model){
+    public String index(Authentication authentication, Model model){
+        // diamo la possibilità di vedere il nome nella pagina
+        model.addAttribute("email", authentication.getName());
         
         // Carichiamo tutte le categorie esistenti
         model.addAttribute("list", categoryService.findAllCategories());

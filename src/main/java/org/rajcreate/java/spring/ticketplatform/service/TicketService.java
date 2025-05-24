@@ -65,7 +65,6 @@ public class TicketService {
     }
 
     // Metodo per filtrare i ticket per status
-    // TODO forse posso fare in un metodo unico
     public List<Ticket> findTicketByStatus(String ticketStatus){
         List <Ticket> result;
 

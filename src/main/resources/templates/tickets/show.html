@@ -75,11 +75,15 @@
                     <!-- shortcut bottoni per gestire il ticket -->
                     <div class="d-flex">
                         <a class="btn btn-outline-success mx-1" th:href="@{|/ticket/${ticket.id}/note|}"> Aggiungi nota </a>
-                        <a class="btn btn-outline-primary mx-1" th:href="@{|/ticket/edit/${ticket.id}|}"> Modifica </a>
-                        <form action="#" th:action="@{'/ticket/delete/{id}'(id=${ticket.id})}" method="post" onclick="return confirm('Confermi di voler eliminare il ticket?')">
+                        <a class="btn btn-outline-primary mx-1" th:href="@{|/ticket/edit/${ticket.id}|}" sec:authorize="hasAuthority('ADMIN')"> Modifica </a>
+                        <form action="#" th:action="@{'/ticket/delete/{id}'(id=${ticket.id})}" method="post" onclick="return confirm('Confermi di voler eliminare il ticket?')"
+                                sec:authorize="hasAuthority('ADMIN')">
                             <button class="btn btn-outline-danger mx-1" type="submit" id="submitButton"> Elimina </button>
                         </form>
                         <a class="btn btn-outline-secondary mx-1" th:href="@{/ticket}">Indietro</a>
+
+                        <!-- Bottone modifica status per OPERATOR -->
+                        <a class="btn btn-outline-primary mx-1" th:href="@{|/ticket/edit/status/${ticket.id}|}" sec:authorize="hasAuthority('OPERATOR')"> Aggiorna stato </a>
                     </div>
                 </div>
 

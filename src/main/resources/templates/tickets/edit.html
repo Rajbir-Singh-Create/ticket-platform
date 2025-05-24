@@ -15,8 +15,8 @@
             <h1>Aggiorna ticket</h1>
             <hr />
 
-            <!-- Form creazione -->
-            <form id="ticket-form" th:object="${ticket}" th:action="@{|/ticket/edit/${ticket.id}|}" method="post">
+            <!-- Form modifica -->
+            <form id="ticket-form" th:object="${ticket}" th:action="${adminRole} ? @{|/ticket/edit/${ticket.id}|} : @{|/ticket/edit/status/${ticket.id}|}" method="post">
                 <div class="row">
                     <div class="col-6">
                         <div class="row">

@@ -7,6 +7,7 @@ import org.rajcreate.java.spring.ticketplatform.model.Ticket;
 import org.rajcreate.java.spring.ticketplatform.service.CategoryService;
 import org.rajcreate.java.spring.ticketplatform.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -37,7 +38,10 @@ public class TicketController {
     // READ
     // Dashboard
     @GetMapping
-    public String index(@RequestParam(name="keyword", required=false) String title, Model model){
+    public String index(Authentication authentication, @RequestParam(name="keyword", required=false) String title, Model model){
+        // diamo la possibilità di vedere il nome nella pagina
+        model.addAttribute("email", authentication.getName());
+        
         model.addAttribute("list", ticketService.findTicketList(title));
 
         return "/tickets/index";
@@ -45,8 +49,10 @@ public class TicketController {
 
     // Detail page
     @GetMapping("/show/{id}")
-    public String show(@PathVariable Integer id, Model model) {
-        
+    public String show(Authentication authentication, @PathVariable Integer id, Model model) {
+        // diamo la possibilità di vedere il nome nella pagina
+        model.addAttribute("email", authentication.getName());
+
         Optional<Ticket> optTicket = ticketService.findTicketById(id);
         
         if(optTicket.isPresent()){
@@ -64,7 +70,9 @@ public class TicketController {
     // CREATE
     // GET per la form di creazione ticket
     @GetMapping("/create")
-    public String create(Model model){
+    public String create(Authentication authentication, Model model){
+        // diamo la possibilità di vedere il nome nella pagina
+        model.addAttribute("email", authentication.getName());
 
         model.addAttribute("ticket", new Ticket());
 
@@ -97,8 +105,12 @@ public class TicketController {
     // UPDATE
     // GET per la form di modifica ticket
     @GetMapping("/edit/{id}")
-    public String edit(@PathVariable Integer id, Model model) {
-        
+    public String edit(Authentication authentication, @PathVariable Integer id, Model model) {
+        // diamo la possibilità di vedere il nome nella pagina
+        model.addAttribute("email", authentication.getName());
+
+        model.addAttribute("adminRole", true);
+
         Optional<Ticket> optTicket = ticketService.findTicketById(id);
         
         if(optTicket.isPresent()){
@@ -145,8 +157,10 @@ public class TicketController {
 
     // GET per aggiunta di note
     @GetMapping("/{id}/note")
-    public String note(@PathVariable Integer id, Model model) {
-        
+    public String note(Authentication authentication, @PathVariable Integer id, Model model) {
+        // diamo la possibilità di vedere il nome nella pagina
+        model.addAttribute("email", authentication.getName());
+
         // Creazione nuovo oggetto nota
         Note note = new Note();
 
@@ -159,5 +173,41 @@ public class TicketController {
         return "/notes/edit";
     }
     
+    // UPDATE DELLO STATUS DA PARTE DELL'OPERATORE
+    // GET per la form di modifica ticket dall'operator
+    @GetMapping("/edit/status/{id}")
+    public String statusEdit(Authentication authentication, @PathVariable Integer id, Model model) {
+        // diamo la possibilità di vedere il nome nella pagina
+        model.addAttribute("email", authentication.getName());
 
+        model.addAttribute("adminRole", false);
+
+        Optional<Ticket> optTicket = ticketService.findTicketById(id);
+        
+        if(optTicket.isPresent()){
+            model.addAttribute("ticket", optTicket.get());
+                    
+            return "/tickets/edit";
+        }
+
+        model.addAttribute("errorCause", "Non esiste ticket con id " + id);
+        model.addAttribute("errorMessage", "Errore di ricerca ticket");
+
+        return "/error_pages/genericError";
+    }
+    
+    // POST per la form di modifica ticket
+    @PostMapping("/edit/status/{id}")
+    public String statusUpdate(@Valid @ModelAttribute("ticket") Ticket formTicket, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+
+        if(bindingResult.hasErrors()){
+            return "/tickets/edit";
+        }
+
+        ticketService.update(formTicket);
+
+        redirectAttributes.addFlashAttribute("successMessage", "Status aggiornato con successo");
+        
+        return "redirect:/ticket/show/" + formTicket.getId();
+    }
 }

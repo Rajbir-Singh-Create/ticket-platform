@@ -21,10 +21,36 @@
                         <li class="nav-item">
                             <a class="nav-link" th:classAppend="${current == 'ticket'} ? active : not-active" aria-current="page" th:href="@{/ticket}">Dashboard</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
                             <a class="nav-link" th:classAppend="${current == 'categories'} ? active : not-active" aria-current="page" th:href="@{/categories}">Categorie</a>
                         </li>
                     </ul>
+
+                    <!-- Informazioni utente loggato -->
+                    <div class="ms-auto d-flex">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <span th:text="|Ciao ${email}|"></span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-person-fill" viewBox="0 0 16 16">
+                                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+                                </svg>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <h6 class="dropdown-header">Profilo utente</h6>
+                                </li>
+                                <li>
+                                    <span class="dropdown-item-text">Logged user: <span sec:authentication="name"></span></span>
+                                </li>
+                                <li>
+                                    <span class="dropdown-item-text">Role: <span sec:authentication="principal.authorities"></span></span>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="/logout"> LOGOUT </a></li>
+                            </ul>
+                        </div>
                 </div>
             </div>
         </nav>

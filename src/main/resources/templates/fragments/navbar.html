@@ -24,6 +24,9 @@
                         <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
                             <a class="nav-link" th:classAppend="${current == 'categories'} ? active : not-active" aria-current="page" th:href="@{/categories}">Categorie</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:classAppend="${current == 'userProfile'} ? active : not-active" aria-current="page" th:href="@{/operator}">Profilo personale</a>
+                        </li>
                     </ul>
 
                     <!-- Informazioni utente loggato -->

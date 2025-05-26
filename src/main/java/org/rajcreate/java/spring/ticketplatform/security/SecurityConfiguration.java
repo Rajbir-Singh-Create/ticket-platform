@@ -24,6 +24,7 @@ public class SecurityConfiguration {
                 .requestMatchers(HttpMethod.POST, "/ticket/**").hasAuthority("ADMIN")
                 .requestMatchers("/categories", "/categories/**").hasAuthority("ADMIN")
                 .requestMatchers("/ticket", "/ticket/**").hasAnyAuthority("OPERATOR", "ADMIN")
+                .requestMatchers("/operator", "/operator/**").hasAnyAuthority("OPERATOR", "ADMIN")
                 .requestMatchers("/**").permitAll()
                 .and().formLogin()
                 .and().logout()

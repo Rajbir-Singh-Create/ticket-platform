@@ -7,6 +7,7 @@ import org.rajcreate.java.spring.ticketplatform.model.Category;
 import org.rajcreate.java.spring.ticketplatform.model.Note;
 import org.rajcreate.java.spring.ticketplatform.model.Ticket;
 import org.rajcreate.java.spring.ticketplatform.model.User;
+import org.rajcreate.java.spring.ticketplatform.repository.UserRepository;
 import org.rajcreate.java.spring.ticketplatform.security.DatabaseUserDetailsService;
 import org.rajcreate.java.spring.ticketplatform.service.CategoryService;
 import org.rajcreate.java.spring.ticketplatform.service.TicketService;
@@ -41,6 +42,9 @@ public class TicketController {
 
     @Autowired
     private DatabaseUserDetailsService databaseUserDetailsService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     // READ
     // Dashboard

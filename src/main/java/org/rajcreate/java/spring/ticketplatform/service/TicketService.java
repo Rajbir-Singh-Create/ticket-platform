@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.rajcreate.java.spring.ticketplatform.model.Note;
 import org.rajcreate.java.spring.ticketplatform.model.Ticket;
+import org.rajcreate.java.spring.ticketplatform.model.User;
 import org.rajcreate.java.spring.ticketplatform.repository.NoteRepository;
 import org.rajcreate.java.spring.ticketplatform.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,5 +89,9 @@ public class TicketService {
         }
 
         return result;
+    }
+
+    public List<Ticket> findTicketsByOperator(User operator){
+        return ticketRepository.findByOperatore(operator);
     }
 }

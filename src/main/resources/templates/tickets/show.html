@@ -91,7 +91,7 @@
                         <div class="card-header">Note</div>
                         <div class="card-body">
                             <h6><Strong>Data creazione: </Strong><span th:text="${note.creationDate}"></span></h6>
-                            <h6><Strong>Scritta da: </Strong><span th:text="${note.author}"></span></h6>
+                            <h6><Strong>Autore: </Strong><span th:text="${note.author.username}"></span></h6>
                             <p class="card-text my-3" th:text="${note.noteField}"></p>
 
                             <!-- Buttons -->

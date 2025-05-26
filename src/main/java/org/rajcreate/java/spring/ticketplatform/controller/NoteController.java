@@ -3,8 +3,10 @@ package org.rajcreate.java.spring.ticketplatform.controller;
 import java.util.Optional;
 
 import org.rajcreate.java.spring.ticketplatform.model.Note;
+import org.rajcreate.java.spring.ticketplatform.model.User;
 import org.rajcreate.java.spring.ticketplatform.repository.NoteRepository;
 import org.rajcreate.java.spring.ticketplatform.repository.TicketRepository;
+import org.rajcreate.java.spring.ticketplatform.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -33,15 +35,23 @@ public class NoteController {
     @Autowired
     private TicketRepository ticketRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     // CREATE Nota
     @PostMapping("/create")
-    public String store(@Valid @ModelAttribute("note") Note formNote, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+    public String store(Authentication authentication, @Valid @ModelAttribute("note") Note formNote, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         
         if(bindingResult.hasErrors()){
             model.addAttribute("editMode", false);
             return "/notes/edit";
         }
         
+        // Recupera l’utente loggato
+        String username = authentication.getName();
+        User author = userRepository.findByUsername(username).get();
+        formNote.setAuthor(author);
+
         ticketRepository.save(formNote.getTicket());
         noteRepository.save(formNote);
 
@@ -67,12 +77,17 @@ public class NoteController {
     }
     
     @PostMapping("/edit/{id}")
-    public String update(@Valid @ModelAttribute("note") Note formNote, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+    public String update(Authentication authentication, @Valid @ModelAttribute("note") Note formNote, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         
         if(bindingResult.hasErrors()){
             model.addAttribute("editMode", false);
             return "/notes/edit";
         }
+
+        // Recupera l’utente loggato
+        String username = authentication.getName();
+        User author = userRepository.findByUsername(username).get();
+        formNote.setAuthor(author);
 
         ticketRepository.save(formNote.getTicket());
         noteRepository.save(formNote);

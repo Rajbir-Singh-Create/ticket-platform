@@ -24,8 +24,6 @@ public class Note {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
 
-    private String author;
-
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "creation_date")
     private LocalDate creationDate;
@@ -39,7 +37,10 @@ public class Note {
     @JsonBackReference
     private Ticket ticket;
 
-    // TODO Aggiungere operatore nel costruttore
+    @ManyToOne
+    @JoinColumn(name = "author_id", nullable = false)
+    private User author;
+
     public Note(){
         this.creationDate = LocalDate.now();
     }
@@ -50,14 +51,6 @@ public class Note {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
     }
 
     public LocalDate getCreationDate() {
@@ -84,5 +77,13 @@ public class Note {
         this.ticket = ticket;
     }
 
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
+    }
+    
     
 }

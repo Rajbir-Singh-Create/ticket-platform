@@ -39,6 +39,7 @@ public class Note {
 
     @ManyToOne
     @JoinColumn(name = "author_id", nullable = false)
+    @JsonBackReference
     private User author;
 
     public Note(){

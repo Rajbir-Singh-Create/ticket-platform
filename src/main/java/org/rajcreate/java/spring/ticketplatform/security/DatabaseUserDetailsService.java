@@ -39,15 +39,4 @@ public class DatabaseUserDetailsService implements UserDetailsService{
     public List<User> findAvailableOperators() {
         return userRepository.findAvailableOperators();
     }
-
-    // Verifica se un operatore è disponibile
-    // public boolean isAvailableOperator(Integer id) {
-    //     Optional<User> userOpt = userRepository.findById(id);
-    //         if (userOpt.isPresent()) {
-    //             return userOpt.get().isDisponibile();
-    //         } else {
-    //             // utente non trovato
-    //             return false;
-    //         }
-    // }
 }

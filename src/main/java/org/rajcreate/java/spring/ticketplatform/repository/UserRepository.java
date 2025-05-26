@@ -13,6 +13,7 @@ public interface UserRepository extends JpaRepository<User, Integer>{
 
     public Optional<User> findByUsername(String username);
 
+    // Riceca di utenti con ruolo operatore e disponibili = true
     @Query("SELECT u FROM User u JOIN u.roles r WHERE r.roleName = 'OPERATOR' AND u.disponibile = true")
     List<User> findAvailableOperators();
 }

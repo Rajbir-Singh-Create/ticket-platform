@@ -2,6 +2,8 @@ package org.rajcreate.java.spring.ticketplatform.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -35,6 +37,7 @@ public class User {
     private List<Role> roles;
 
     @OneToMany(mappedBy = "operatore")
+    @JsonBackReference
     private List<Ticket> assignedTickets;
 
     public List<Ticket> getAssignedTickets() {

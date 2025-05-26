@@ -55,6 +55,18 @@ public class Ticket {
     @OneToMany(mappedBy="ticket")
     private List <Note> note;
 
+    @ManyToOne
+    @JoinColumn(name = "operator_id")
+    private User operatore;
+
+    public User getOperatore() {
+        return operatore;
+    }
+
+    public void setOperatore(User operatore) {
+        this.operatore = operatore;
+    }
+
     // Aggiunta automatica della data di creazione tramite costruttore
     public Ticket(){
         this.startDate = LocalDate.now();

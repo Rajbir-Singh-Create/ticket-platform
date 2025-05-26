@@ -2,6 +2,7 @@ package org.rajcreate.java.spring.ticketplatform.security;
 
 
 
+import java.util.List;
 import java.util.Optional;
 
 import org.rajcreate.java.spring.ticketplatform.model.User;
@@ -19,11 +20,11 @@ public class DatabaseUserDetailsService implements UserDetailsService{
     private UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // Eseguiamo la query per recuperare l'utente dal suo username
         // utilizzando il repository di User iniettato in precedenza
         // Lo salviamo nella variabile optUser
-        Optional<User> optUser = userRepository.findByEmail(email);
+        Optional<User> optUser = userRepository.findByUsername(username);
 
         // Se l'username è presente, viene restituita un'istanza di DatabaseUserDetails
         // passando nel costruttore optUser perché accetta un oggetto di tipo User
@@ -33,4 +34,20 @@ public class DatabaseUserDetailsService implements UserDetailsService{
             throw new UsernameNotFoundException("Username not found");
         }
     }
+
+    // Ricerca di operatori disponibili
+    public List<User> findAvailableOperators() {
+        return userRepository.findAvailableOperators();
+    }
+
+    // Verifica se un operatore è disponibile
+    // public boolean isAvailableOperator(Integer id) {
+    //     Optional<User> userOpt = userRepository.findById(id);
+    //         if (userOpt.isPresent()) {
+    //             return userOpt.get().isDisponibile();
+    //         } else {
+    //             // utente non trovato
+    //             return false;
+    //         }
+    // }
 }

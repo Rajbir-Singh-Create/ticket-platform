@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -22,14 +23,27 @@ public class User {
     private String email;
 
     @NotNull
-    private String password;
+    private String username;
 
     @NotNull
-    @Column(name = "status_flag")
-    private String statusFlag;
+    private String password;
+
+    @Column(name = "disponibile", nullable = false)
+    private boolean disponibile;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles;
+
+    @OneToMany(mappedBy = "operatore")
+    private List<Ticket> assignedTickets;
+
+    public List<Ticket> getAssignedTickets() {
+        return assignedTickets;
+    }
+
+    public void setAssignedTickets(List<Ticket> assignedTickets) {
+        this.assignedTickets = assignedTickets;
+    }
 
     public Integer getId() {
         return id;
@@ -55,14 +69,6 @@ public class User {
         this.password = password;
     }
 
-    public String getStatusFlag() {
-        return statusFlag;
-    }
-
-    public void setStatusFlag(String statusFlag) {
-        this.statusFlag = statusFlag;
-    }
-
     public List<Role> getRoles() {
         return roles;
     }
@@ -70,5 +76,23 @@ public class User {
     public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public boolean isDisponibile() {
+        return disponibile;
+    }
+
+    public void setDisponibile(boolean disponibile) {
+        this.disponibile = disponibile;
+    }
+
+    
 
 }

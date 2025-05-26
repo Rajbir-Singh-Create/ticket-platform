@@ -14,6 +14,7 @@ public class DatabaseUserDetails implements UserDetails {
 
     private final Integer id;
     private final String email;
+    private String username;
     private final String password;
     private final List<GrantedAuthority> authorities;
 
@@ -21,6 +22,7 @@ public class DatabaseUserDetails implements UserDetails {
         // prendiamo i dati dal DB e li mettiamo nelle variabili di istanza
         this.id = user.getId();
         this.email = user.getEmail();
+        this.username = user.getUsername();
         this.password = user.getPassword();
         this.authorities = new ArrayList<>();
 
@@ -45,7 +47,7 @@ public class DatabaseUserDetails implements UserDetails {
 
     @Override
     public String getUsername(){
-        return this.email;
+        return this.username;
     }
 
 }

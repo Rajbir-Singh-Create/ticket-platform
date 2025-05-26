@@ -1,10 +1,13 @@
 package org.rajcreate.java.spring.ticketplatform.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.rajcreate.java.spring.ticketplatform.model.Category;
 import org.rajcreate.java.spring.ticketplatform.model.Note;
 import org.rajcreate.java.spring.ticketplatform.model.Ticket;
+import org.rajcreate.java.spring.ticketplatform.model.User;
+import org.rajcreate.java.spring.ticketplatform.security.DatabaseUserDetailsService;
 import org.rajcreate.java.spring.ticketplatform.service.CategoryService;
 import org.rajcreate.java.spring.ticketplatform.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +38,9 @@ public class TicketController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private DatabaseUserDetailsService databaseUserDetailsService;
 
     // READ
     // Dashboard
@@ -80,6 +86,10 @@ public class TicketController {
         // Carico le categorie
         model.addAttribute("categoryList", categoryService.findAllCategories());
 
+        // Carico gli operatori disponibili
+        List<User> availableOperators = databaseUserDetailsService.findAvailableOperators();
+        model.addAttribute("operatorList", availableOperators);
+
         return "/tickets/create";
     }
 
@@ -89,9 +99,11 @@ public class TicketController {
         
         // Logica validazione
         if(bindingResult.hasErrors()){
-            // Ricarico le categorie
+            // Ricarico le categorie e gli operatori
             model.addAttribute("categoryList", categoryService.findAllCategories());
-            
+            List<User> availableOperators = databaseUserDetailsService.findAvailableOperators();
+            model.addAttribute("operatorList", availableOperators);
+
             // Se il bindingResult ha dato errori, resto nella pagina
             return "/tickets/create";
         }
@@ -118,6 +130,10 @@ public class TicketController {
             model.addAttribute("ticket", optTicket.get());
             // Carico le categorie
             model.addAttribute("categoryList", categoryService.findAllCategories());
+
+            // Carico gli operatori disponibili
+            List<User> availableOperators = databaseUserDetailsService.findAvailableOperators();
+            model.addAttribute("operatorList", availableOperators);
         
             return "/tickets/edit";
         }
@@ -135,6 +151,10 @@ public class TicketController {
         if(bindingResult.hasErrors()){
             // Ricarico le categorie
             model.addAttribute("categoryList", categoryService.findAllCategories());
+
+            // Carico gli operatori disponibili
+            List<User> availableOperators = databaseUserDetailsService.findAvailableOperators();
+            model.addAttribute("operatorList", availableOperators);
 
             return "/tickets/edit";
         }
@@ -187,6 +207,10 @@ public class TicketController {
         
         if(optTicket.isPresent()){
             model.addAttribute("ticket", optTicket.get());
+
+            // Carico gli operatori disponibili
+            List<User> availableOperators = databaseUserDetailsService.findAvailableOperators();
+            model.addAttribute("operatorList", availableOperators);
                     
             return "/tickets/edit";
         }

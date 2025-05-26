@@ -109,6 +109,25 @@
                                 </th:block>
                             </div>
 
+                            <!-- No operatori disponibili -->
+                            <div th:if="${operatorList.isEmpty()}" class="alert alert-warning col-12 my-2">
+                                Nessun operatore disponibile: non puoi aprire un ticket in questo momento.
+                            </div>
+
+                            <!-- Assegnazione operatori -->
+                            <div class="col-12 my-2" th:unless="${operatorList.isEmpty()}">
+                                <label class="form-label">Assegna a operatore</label>
+                                <th:block th:if="${adminRole}">
+                                    <select class="form-select" id="operator" th:field="*{operatore.id}">
+                                        <option th:each="op : ${operatorList}" th:value="${op.id}" th:text="${op.username}" selected></option>
+                                    </select>
+                                </th:block>
+                                <th:block th:unless="${adminRole}">
+                                    <input type="hidden" th:field="*{operatore.id}" />
+                                    <input type="text" class="form-control" th:value="${ticket.operatore.username}" readonly />
+                                </th:block>
+                            </div>
+
                             <!-- Buttons -->
                             <div class="col-12 my-3">
                                 <button class="btn btn-outline-primary" type="submit">

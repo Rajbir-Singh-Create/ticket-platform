@@ -53,6 +53,7 @@
                                 <th>Titolo</th>
                                 <th>Stato</th>
                                 <th></th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -73,6 +74,12 @@
                                 <td>
                                     <!-- ! Bottone modifica status per OPERATOR -->
                                     <a class="btn btn-outline-primary mx-1" th:href="@{|/ticket/edit/status/${ticket.id}|}" sec:authorize="hasAuthority('OPERATOR')"> Aggiorna stato </a>
+                                </td>
+                                <!-- Dettagli ticket -->
+                                <td>
+                                    <a class="btn btn-outline-primary mx-1" th:href="@{|/ticket/show/${ticket.id}|}">
+                                        Dettagli
+                                    </a>
                                 </td>
                             </tr>
                         </tbody>

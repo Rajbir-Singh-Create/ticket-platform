@@ -52,6 +52,7 @@
                                 <th>ID</th>
                                 <th>Titolo</th>
                                 <th>Stato</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -68,6 +69,10 @@
                                 </td>
                                 <td th:if="${ticket.ticketStatus == 'Completato'}">
                                     <div class="badge bg-success" th:text="${ticket.ticketStatus}"></div>
+                                </td>
+                                <td>
+                                    <!-- ! Bottone modifica status per OPERATOR -->
+                                    <a class="btn btn-outline-primary mx-1" th:href="@{|/ticket/edit/status/${ticket.id}|}" sec:authorize="hasAuthority('OPERATOR')"> Aggiorna stato </a>
                                 </td>
                             </tr>
                         </tbody>
